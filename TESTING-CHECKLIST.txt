@@ -1,0 +1,17 @@
+PDFora pre-live testing checklist
+
+1. Open / and /pdf-tools/ and confirm all 24 tools appear.
+2. Test Compress, Merge, Split, Rotate, Delete, Extract and Reorder with normal PDFs.
+3. Test PDF to JPG/PNG and JPG/PNG to PDF.
+4. Edit PDF: add text, highlight, whiteout, drawing and an image, then export.
+5. Sign PDF: draw or type a signature, select page/position, then download.
+6. Watermark and Page Numbers: test one PDF and a 2-10 file batch.
+7. Protect PDF: add a password, close/reopen output in a PDF reader, verify password is required.
+8. Unlock PDF: use a password-protected PDF that you are authorized to modify and verify output opens without the password.
+9. PDF to Word / Excel / PowerPoint: test simple and multi-page PDFs.
+10. Word / Excel / PowerPoint to PDF: test standard DOCX/XLSX/PPTX documents.
+11. OCR PDF: test a scanned English PDF and confirm text can be searched in the output.
+12. Mobile: test upload, options, processing, download, navigation and search.
+13. Check /health on Cloudflare; it should return JSON with ok:true.
+14. Review Privacy Policy, Terms, Cookie Policy and Disclaimer before adding ads/analytics.
+15. When AdSense is later enabled, update privacy/cookie disclosures and CSP for the exact Google scripts/domains used.

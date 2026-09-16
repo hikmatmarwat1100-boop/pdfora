@@ -1,0 +1,21 @@
+PDFora layout fidelity update
+
+PDF -> Word
+- Default: Preserve original layout. Each PDF page is rendered at high resolution and placed on a Word page with the same aspect ratio. This is visually faithful but the page body is an image.
+- Optional: Editable text. Text is extracted into Word paragraphs; complex layout can reflow.
+
+PDF -> Excel
+- Default: Preserve original layout. Each PDF page is placed as a high-resolution image on its own worksheet.
+- Optional: Editable table. PDF coordinates are reconstructed into rows/cells; complex layouts can reflow.
+
+PDF -> PowerPoint
+- PDF pages are placed without aspect-ratio distortion. Slides use the source page ratio when possible.
+
+Word -> PDF
+- PDF page dimensions now follow the rendered Word page dimensions instead of forcing A4.
+
+OCR PDF
+- Searchable OCR output now keeps the original PDF page dimensions.
+
+Important
+No browser-only converter can guarantee pixel-perfect layout AND fully editable native Word/Excel/PowerPoint content for every document. PDFora therefore prioritizes layout preservation by default and exposes editable extraction where practical.

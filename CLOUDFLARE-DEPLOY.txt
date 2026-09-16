@@ -1,0 +1,17 @@
+PDFora - Cloudflare Pages Direct Upload
+
+This package is already arranged for Cloudflare Pages.
+IMPORTANT: index.html is at the ROOT of this package.
+
+Recommended deployment:
+1. Cloudflare Dashboard -> Workers & Pages -> Create / open Pages project.
+2. Choose Direct Upload / Upload assets.
+3. Upload the CONTENTS of this folder, or upload the provided ZIP as the deployment bundle.
+4. Do NOT set a nested output folder such as dist when using this ready-to-deploy package.
+5. After deployment, open / and then test /merge-pdf, /compress-pdf and /health.
+
+Architecture:
+- Frontend: plain HTML + CSS + vanilla JavaScript.
+- PDF processing: browser-side JavaScript; user files stay in the browser.
+- Backend: Cloudflare Worker (_worker.js) for /health and /api/config only.
+- No Python server, Node server, database, Firebase, or framework is required for the deployed site.

@@ -1,0 +1,24 @@
+PDFora Layout Fidelity Verification
+Date: 2026-09-16
+
+Changes in this build
+- PDF to Word now defaults to Preserve original layout.
+- PDF to Word also offers Editable text mode for users who prefer native Word paragraphs.
+- Removed artificial Page 1 / Page 2 headings from editable Word output.
+- PDF to Excel now defaults to Preserve original layout on separate worksheets.
+- PDF to Excel also offers Editable table mode.
+- PDF to PowerPoint preserves the PDF page aspect ratio instead of stretching pages to 16:9.
+- Word to PDF now follows the rendered Word page dimensions instead of forcing A4.
+- OCR PDF keeps original PDF page dimensions.
+
+Verification performed
+- 64 HTML files parsed successfully.
+- 4,336 internal href/src references checked; 0 missing.
+- JavaScript syntax checks passed for advanced-tools.js, tool.js, pdf-client.js, app.js and _worker.js.
+- Key local routes returned HTTP 200.
+- Layout-preserving proof test: the supplied one-page PDF was rendered into a Word page using the same image-per-page approach and visually reviewed. The table, logo, signature, spacing and page structure remained in their original positions.
+
+Important conversion behavior
+- Preserve-layout mode prioritizes visual fidelity. In Word/Excel/PowerPoint, a PDF page is represented primarily as a page/slide/worksheet image so the visual layout stays intact.
+- Editable mode prioritizes native editable text/cells. Complex PDF layout can reflow because PDF is a fixed-position format and Office formats are flow/structure-based.
+- A browser-only converter cannot guarantee both pixel-perfect layout and fully editable native Office objects for every PDF, especially scans, embedded fonts, charts, SmartArt and unusual PDF structures.
