@@ -497,19 +497,47 @@
   };
 
   const ocrPdfOne = async (file, options, progress) => {
-    let tess;
-    try { tess = await import('https://cdn.jsdelivr.net/npm/tesseract.js@7.0.0/dist/tesseract.esm.min.js'); }
-    catch (_) { throw new Error('The OCR engine could not load. Check your connection and try again.'); }
+    // Load the official Tesseract.js browser build. Using the plain browser
+    // build exposes window.Tesseract.createWorker; importing tesseract.min.js
+    // as an ES module can cause "createWorker is not a function".
+    let tess = window.Tesseract;
+    if (!tess || typeof tess.createWorker !== 'function') {
+      const cdnCandidates = [
+        'https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js',
+        'https://unpkg.com/tesseract.js@5/dist/tesseract.min.js'
+      ];
+      let lastError = null;
+      for (const src of cdnCandidates) {
+        try {
+          await loadScript(src);
+          tess = window.Tesseract;
+          if (tess && typeof tess.createWorker === 'function') break;
+        } catch (err) {
+          lastError = err;
+        }
+      }
+      if (!tess || typeof tess.createWorker !== 'function') {
+        throw new Error(lastError?.message || 'The OCR engine could not load. Check your connection and try again.');
+      }
+    }
+
     const lang = String(options.get('language') || 'eng');
     const rendered = await renderPdfPages(file, 150, 'png', (v) => progress?.(v * .2));
-    const worker = await tess.createWorker(lang, 1, {
-      workerPath: 'https://cdn.jsdelivr.net/npm/tesseract.js@7.0.0/dist/worker.min.js',
-      corePath: 'https://cdn.jsdelivr.net/npm/tesseract.js-core@6.1.2',
-      langPath: 'https://tessdata.projectnaptha.com/4.0.0_best',
-      logger: (m) => {
-        if (m.status === 'recognizing text' && Number.isFinite(m.progress)) progress?.(.2 + .75 * m.progress);
-      }
-    });
+    let worker;
+    try {
+      // Let Tesseract.js v5 choose the matching worker/core/language assets.
+      // This avoids version mismatches between the API, worker, and WASM core.
+      worker = await tess.createWorker(lang, 1, {
+        logger: (m) => {
+          if (m.status === 'recognizing text' && Number.isFinite(m.progress)) {
+            progress?.(.2 + .75 * m.progress);
+          }
+        }
+      });
+    } catch (err) {
+      throw new Error(`OCR engine initialization failed: ${err?.message || 'Please refresh and try again.'}`);
+    }
+
     const output = await PDFDocument.create();
     const font = await output.embedFont(StandardFonts.Helvetica);
     try {
@@ -524,11 +552,20 @@
         const text = String(result.data.text || '').replace(/[\u0000-\u001f]+/g, ' ').replace(/\s+/g,' ').trim();
         if (text) {
           const chunks = text.match(/.{1,90}(?:\s|$)/g) || [text];
-          chunks.slice(0,120).forEach((chunk, idx) => page.drawText(chunk.trim(), { x: 4, y: Math.max(2, 12 + idx * 4), size: 3, font, opacity: 0.001, color: rgb(1,1,1) }));
+          chunks.slice(0,120).forEach((chunk, idx) => page.drawText(chunk.trim(), {
+            x: 4,
+            y: Math.max(2, 12 + idx * 4),
+            size: 3,
+            font,
+            opacity: 0.001,
+            color: rgb(1,1,1)
+          }));
         }
         progress?.(.2 + .8 * ((i+1)/rendered.length));
       }
-    } finally { await worker.terminate(); }
+    } finally {
+      if (worker) await worker.terminate();
+    }
     return { blob: pdfBlob(await output.save({ useObjectStreams: true })), name: `${stem(file.name)}-ocr-searchable.pdf` };
   };
 
