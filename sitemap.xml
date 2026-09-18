@@ -1,31 +1,172 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://pdfora.com/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://pdfora.com/pdf-tools</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://pdfora.com/compress-pdf</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://pdfora.com/merge-pdf</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://pdfora.com/split-pdf</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://pdfora.com/rotate-pdf</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://pdfora.com/delete-pdf-pages</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://pdfora.com/extract-pdf-pages</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://pdfora.com/reorder-pdf-pages</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://pdfora.com/pdf-to-jpg</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://pdfora.com/pdf-to-png</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://pdfora.com/jpg-to-pdf</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://pdfora.com/png-to-pdf</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://pdfora.com/edit-pdf</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://pdfora.com/sign-pdf</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://pdfora.com/watermark-pdf</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://pdfora.com/add-page-numbers</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://pdfora.com/protect-pdf</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://pdfora.com/unlock-pdf</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://pdfora.com/pdf-to-word</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://pdfora.com/word-to-pdf</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://pdfora.com/pdf-to-excel</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://pdfora.com/excel-to-pdf</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://pdfora.com/pdf-to-powerpoint</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://pdfora.com/powerpoint-to-pdf</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://pdfora.com/ocr-pdf</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://pdfora.com/about</loc><changefreq>yearly</changefreq><priority>0.4</priority></url>
-  <url><loc>https://pdfora.com/contact</loc><changefreq>yearly</changefreq><priority>0.4</priority></url>
+
+  <url>
+    <loc>https://pdfora.site/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://pdfora.site/pdf-tools</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://pdfora.site/compress-pdf</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://pdfora.site/merge-pdf</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://pdfora.site/split-pdf</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://pdfora.site/rotate-pdf</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://pdfora.site/delete-pdf-pages</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://pdfora.site/extract-pdf-pages</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://pdfora.site/reorder-pdf-pages</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://pdfora.site/pdf-to-jpg</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://pdfora.site/pdf-to-png</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://pdfora.site/jpg-to-pdf</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://pdfora.site/png-to-pdf</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://pdfora.site/edit-pdf</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://pdfora.site/sign-pdf</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://pdfora.site/watermark-pdf</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://pdfora.site/add-page-numbers</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://pdfora.site/protect-pdf</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://pdfora.site/unlock-pdf</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://pdfora.site/pdf-to-word</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://pdfora.site/word-to-pdf</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://pdfora.site/pdf-to-excel</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://pdfora.site/excel-to-pdf</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://pdfora.site/pdf-to-powerpoint</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://pdfora.site/powerpoint-to-pdf</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://pdfora.site/ocr-pdf</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://pdfora.site/about</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+
+  <url>
+    <loc>https://pdfora.site/contact</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+
 </urlset>
