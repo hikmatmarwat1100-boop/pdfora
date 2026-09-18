@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /health
-Sitemap: https://pdfora.com/sitemap.xml
+Sitemap: https://pdfora.site/sitemap.xml
