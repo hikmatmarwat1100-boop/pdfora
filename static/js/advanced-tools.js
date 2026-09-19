@@ -413,30 +413,77 @@
     const font = await output.embedFont(StandardFonts.Helvetica);
     const bold = await output.embedFont(StandardFonts.HelveticaBold);
     const pageW = 842, pageH = 595, margin = 28, rowH = 18;
+    const maxColsPerPage = 10;
+    const printableW = pageW - margin * 2;
     let done = 0;
+
     for (const sheetName of wb.SheetNames) {
       const rows = XLSX.utils.sheet_to_json(wb.Sheets[sheetName], { header: 1, raw: false, defval: '' });
       const normalized = rows.length ? rows : [['']];
       const maxCols = Math.max(1, ...normalized.map(r => r.length));
-      const colW = Math.max(70, Math.min(180, (pageW - margin*2) / Math.min(maxCols, 10)));
-      const perPage = Math.max(8, Math.floor((pageH - margin*2 - 30) / rowH));
+      const perPage = Math.max(8, Math.floor((pageH - margin * 2 - 30) / rowH));
+
+      // Wide sheets are split into horizontal column groups instead of silently
+      // dropping every column after the first 10.
       for (let start = 0; start < normalized.length; start += perPage) {
-        const page = output.addPage([pageW, pageH]);
-        page.drawText(sheetName, { x: margin, y: pageH-margin-14, font: bold, size: 12, color: rgb(.18,.21,.29) });
         const slice = normalized.slice(start, start + perPage);
-        slice.forEach((row, r) => {
-          const y = pageH - margin - 34 - (r+1)*rowH;
-          for (let c = 0; c < Math.min(maxCols, 10); c += 1) {
-            const x = margin + c * colW;
-            page.drawRectangle({ x, y, width: colW, height: rowH, borderColor: rgb(.82,.84,.88), borderWidth: .4, color: r === 0 && start === 0 ? rgb(.96,.97,.99) : rgb(1,1,1) });
-            let txt = String(row[c] ?? '').replace(/\s+/g,' ');
-            while (font.widthOfTextAtSize(txt, 8) > colW - 8 && txt.length > 2) txt = `${txt.slice(0,-2)}…`;
-            page.drawText(txt, { x: x+4, y: y+5, font: r === 0 && start === 0 ? bold : font, size: 8, color: rgb(.2,.23,.3) });
-          }
-        });
+
+        for (let colStart = 0; colStart < maxCols; colStart += maxColsPerPage) {
+          const colEnd = Math.min(maxCols, colStart + maxColsPerPage);
+          const visibleCols = Math.max(1, colEnd - colStart);
+          const colW = Math.max(70, Math.min(180, printableW / visibleCols));
+
+          const page = output.addPage([pageW, pageH]);
+          const title = maxCols > maxColsPerPage
+            ? `${sheetName} · Columns ${colStart + 1}-${colEnd}`
+            : sheetName;
+
+          page.drawText(title, {
+            x: margin,
+            y: pageH - margin - 14,
+            font: bold,
+            size: 12,
+            color: rgb(.18,.21,.29)
+          });
+
+          slice.forEach((row, r) => {
+            const y = pageH - margin - 34 - (r + 1) * rowH;
+
+            for (let c = colStart; c < colEnd; c += 1) {
+              const x = margin + (c - colStart) * colW;
+              const isHeader = r === 0 && start === 0;
+
+              page.drawRectangle({
+                x,
+                y,
+                width: colW,
+                height: rowH,
+                borderColor: rgb(.82,.84,.88),
+                borderWidth: .4,
+                color: isHeader ? rgb(.96,.97,.99) : rgb(1,1,1)
+              });
+
+              let txt = String(row[c] ?? '').replace(/\s+/g, ' ');
+              while (font.widthOfTextAtSize(txt, 8) > colW - 8 && txt.length > 2) {
+                txt = `${txt.slice(0,-2)}…`;
+              }
+
+              page.drawText(txt, {
+                x: x + 4,
+                y: y + 5,
+                font: isHeader ? bold : font,
+                size: 8,
+                color: rgb(.2,.23,.3)
+              });
+            }
+          });
+        }
       }
-      done += 1; progress?.(done / wb.SheetNames.length);
+
+      done += 1;
+      progress?.(done / wb.SheetNames.length);
     }
+
     return { blob: pdfBlob(await output.save({ useObjectStreams: true })), name: `${stem(file.name)}.pdf` };
   };
 
