@@ -47,6 +47,7 @@
   let draggedIndex = null;
   let activeXhr = null;
   let activeJob = 0;
+  let processingController = null;
   let progressTicker = null;
   let inspectController = null;
   let inspectGeneration = 0;
@@ -347,6 +348,9 @@
     setProgress(4);
     processButton.disabled = true;
     window.PDForaAnalytics?.track('processing_started', { action });
+    processingController?.abort();
+    const controller = new AbortController();
+    processingController = controller;
     const job = ++activeJob;
     try {
       if (!window.PDForaProcessor) throw new Error('The secure processing engine could not load. Refresh the page and try again.');
@@ -354,13 +358,15 @@
         action,
         files: currentFiles,
         options: new FormData(form),
+        signal: controller.signal,
         progress: (value) => {
-          if (job !== activeJob) return;
+          if (controller.signal.aborted) throw new DOMException('Processing cancelled.', 'AbortError');
+          if (job !== activeJob) throw new DOMException('Processing cancelled.', 'AbortError');
           setProgress(8 + value * 88);
           progressTitle.textContent = value > 0.9 ? 'Finishing your file…' : 'Processing securely…';
         }
       });
-      if (job !== activeJob) return;
+      if (controller.signal.aborted || job !== activeJob) return;
       const blob = result.blob;
       if (!blob || !blob.size) throw new Error('The PDF engine returned an empty result. Please try again.');
       setProgress(100);
@@ -392,13 +398,20 @@
       resultPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       window.PDForaAnalytics?.track('processing_completed', { action });
     } catch (error) {
-      if (job !== activeJob) return;
+      if (controller.signal.aborted || error?.name === 'AbortError' || job !== activeJob) return;
       showError(error?.message || 'Something went wrong while processing your file. Please try again.');
+    } finally {
+      if (processingController === controller) processingController = null;
     }
   });
 
   cancelProcess.addEventListener('click', () => {
+    if (!processingController) return;
+    processingController.abort();
+    if (activeXhr) activeXhr.abort();
+    activeXhr = null;
     activeJob += 1;
+    stopProgressTicker();
     progressPanel.hidden = true;
     processButton.disabled = false;
     showError('Processing was cancelled. Your current selection is still available.');
@@ -406,6 +419,9 @@
 
   downloadButton.addEventListener('click', () => window.PDForaAnalytics?.track('download_clicked', { action }));
   resetTool.addEventListener('click', () => {
+    processingController?.abort();
+    processingController = null;
+    activeJob += 1;
     if (activeXhr) activeXhr.abort();
     activeXhr = null;
     stopProgressTicker();
@@ -418,5 +434,8 @@
     dropZone.scrollIntoView({ behavior: 'smooth', block: 'center' });
   });
 
-  window.addEventListener('beforeunload', clearDownloadUrl);
+  window.addEventListener('beforeunload', () => {
+    processingController?.abort();
+    clearDownloadUrl();
+  });
 })();
