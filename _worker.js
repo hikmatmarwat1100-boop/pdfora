@@ -22,7 +22,7 @@ export default {
       return Response.json({
         ok: true,
         siteUrl: new URL(request.url).origin,
-        supportEmail: 'support@pdfora.com',
+        supportEmail: 'hikmatmarwat1100@gmail.com',
         processing: 'browser'
       }, {
         headers: {
